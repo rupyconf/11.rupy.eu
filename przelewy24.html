@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>RuPy 2011</title>
+		<style type="text/css">
+			body {
+				background-color: #E0F0DD;
+				font: 14px helvetica,arial,sans-serif;
+			}
+			#main {
+				width: 800px;
+				margin: 20px auto;
+				background-color: #fff;
+				border: 1px solid #999;
+				border-radius: 4px;
+				padding: 20px 20px;
+			}
+			#header {
+				margin-bottom: 30px;
+				border-bottom: 1px solid #0F4704;
+			}
+			h1 {
+				width: 500px;
+				margin: 10px auto;
+				color: #0F4704;
+			}
+			#container {
+				padding: 7px;
+			}
+			#error {
+				width: 500px;
+				margin: 0 auto 40px;
+				color: red;
+				text-align: center;
+				font-weight: bold;
+			}
+			.formField {
+				width: 400px;
+				margin: 10px auto 40px;
+			}
+			.important {
+				font-weight: bold;
+				color: #C20000;
+			}
+			.inputLabel {
+				margin-bottom: 15px;
+			}
+			input {
+				display:block;
+				margin: auto;
+			}
+			input.radio {
+				display: inline;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-1.6.3.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$("label[for='amount']").text('Amount (current price in PLN):');
+				$("#amount").val(284);
+				$("label[for='regId']").html('Registration id <span class="important"> (please enter your registration id!)</span>:');
+				$("#regId").val('');
+				$("#paymentForm").submit(function() {
+					if(!$("#amount").val()) {
+						$('#error').text("Enter amount!");
+						return false;
+					}
+					if(!$("#regId").val()) {
+						$('#error').html("Enter registration id! Without we cannot match your payment.");
+						return false;
+					}
+					var regId = $("#regId").val();
+					$("#regId").val("RuPy 2011 " + $("#regId").val());
+					var amount = $("#amount").val();
+					$("#amount").val(amount + "00");
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="main">
+			<div id="header">
+				<h1>RuPy 2011 registration payment</h1>
+			</div>
+			<div id="container">
+				<div id="error"></div>
+				<form id="paymentForm" method="GET" action="https://sklep.przelewy24.pl/zakup.php">
+					<input name="z24_id_sprzedawcy" type="hidden" value="7065" />
+					<input name="z24_crc" type="hidden" value="f46ff636" />
+					<div class="formField">
+						<div class="inputLabel">
+							<label for="regId">Registration id <span class="important">(please append your registration id!)</span>:</label>
+						</div>
+						<input id="regId" name="z24_nazwa" type="text" value="RuPy 2011" />
+					</div>
+					
+					<div class="formField">
+						<div class="inputLabel">
+							<label for="amount">Amount in grosze (current price in PLN)</label>
+						</div>
+						<input id="amount" name="z24_kwota" type="text" value="28400" />
+					</div>
+					
+					<div class="formField">
+						<div class="inputLabel">
+							Language:
+						</div>
+						<label for="en">en</label>
+						<input id="en" class="radio" name="z24_language" type="radio" value="en" checked="checked" />
+						<label for="pl">pl</label>
+						<input id="pl" class="radio" name="z24_language" type="radio" value="pl" />
+					</div>
+					
+					<div class="formField">
+						<input type="submit" value="Go" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
+
+
